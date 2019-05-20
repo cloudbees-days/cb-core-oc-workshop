@@ -61,3 +61,5 @@ data:
         header: "<div id=\"loginIntro\">\n  <h1 id=\"productName\">CloudBees Core Workshop</h1>\n\
         </div>"
         useDefaultTheme: true
+  operationsCenterSharedConfiguration:
+    enabled: false
