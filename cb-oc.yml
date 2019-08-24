@@ -12,6 +12,11 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
   name: master-management
 rules:
+- apiGroups: ['extensions']
+  resources: ['podsecuritypolicies']
+  verbs:     ['use']
+  resourceNames:
+  - cb-restricted
 - apiGroups: [""]
   resources: ["pods"]
   verbs: ["create","delete","get","list","patch","update","watch"]
@@ -99,7 +104,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: jenkins
-        image: cloudbees/cloudbees-cloud-core-oc:2.164.3.2
+        image: gcr.io/core-workshop/cloudbees-cloud-core-oc:2.176.2.3-1
         env:
         - name: ENVIRONMENT
           value: KUBERNETES
@@ -128,9 +133,12 @@ spec:
         - containerPort: 8080
         - containerPort: 50000
         resources:
-          limits:
+          requests:
             cpu: "2"
             memory: "5G"
+          limits:
+            cpu: "6"
+            memory: "24G"
         volumeMounts:
         - name: jenkins-home
           mountPath: /var/jenkins_home

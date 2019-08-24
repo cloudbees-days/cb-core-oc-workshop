@@ -10,9 +10,17 @@ metadata:
 spec:
   privileged: false
   fsGroup:
-    rule: RunAsAny
+    rule: 'MustRunAs'
+    ranges:
+      # Forbid adding the root group.
+      - min: 1
+        max: 65535
   runAsUser:
-    rule: RunAsAny
+    rule: 'MustRunAs'
+    ranges:
+      # Forbid adding the root group.
+      - min: 1
+        max: 65535
   seLinux:
     rule: RunAsAny
   supplementalGroups:

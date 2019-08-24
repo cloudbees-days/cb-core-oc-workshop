@@ -16,8 +16,8 @@ data:
         enabled: false
       dockerImageDefinitionConfiguration:
         images:
-        - imageTag: "gcr.io/technologists/cb-core-mm-workshop:0.0.2"
-          name: "Workshop Image"
+        - imageTag: "gcr.io/technologists/cb-core-mm-workshop:2176.1.2"
+          name: "CloudBees Core - Workshop Team Master"
       experimentalPlugins:
         enabled: false
       kubernetesMasterProvisioning:
@@ -36,7 +36,7 @@ data:
         livenessTimeoutSeconds: 10
         memory: 3072
         ratio: !!int '0.7'
-        storageClassName: "ssd-"
+        storageClassName: "ssd"
         terminationGracePeriodSeconds: 1200
         yaml: "---\nkind: Ingress\nmetadata:\n  annotations:\n    kubernetes.io/ingress.class:\
           \ \"nginx\"\n    \n---\nkind: StatefulSet\nspec:\n  template:\n    metadata:\n\
@@ -45,9 +45,11 @@ data:
           \          # With the help of SECRETS environment variable\n          # we point\
           \ Jenkins Configuration as Code plugin the location of the secrets\n       \
           \   - name: SECRETS\n            value: /var/jenkins_home/mm-secrets\n     \
-          \   volumeMounts:\n        - name: mm-secrets\n          mountPath: /var/jenkins_home/mm-secrets\n\
+          \     - name: ENV CASC_JENKINS_CONFIG\n            value: https://raw.githubusercontent.com/kypseli/cb-core-mm-workshop/master/config-as-code.yml\n\
+          \        volumeMounts:\n        - name: mm-secrets\n          mountPath: /var/jenkins_home/mm-secrets\n\
           \          readOnly: true\n      volumes:\n      - name: mm-secrets\n      \
-          \  secret:\n          secretName: mm-secrets"
+          \  secret:\n          secretName: mm-secrets\n      nodeSelector:\n        type:\
+          \ master\n"
       loginTheme:
         footer: "<a target=\"_blank\" href=\"https://github.com/cloudbees-days/cloudbees-core-workshop/blob/master/Setup.md\"\
         >Setup for CloudBees Core Workshop</a>"
