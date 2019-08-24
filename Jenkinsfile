@@ -1,4 +1,4 @@
-library 'cb-days@master'
+library 'kypseli@master'
 def podYaml = libraryResource 'podtemplates/kubectl.yml'
 pipeline {
   agent {
