@@ -1,0 +1,4 @@
+configuration-as-code:1.27
+devoptics:1.1771
+simple-theme-plugin:0.5.1
+
