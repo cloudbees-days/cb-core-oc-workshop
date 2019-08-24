@@ -107,7 +107,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: jenkins
-        image: gcr.io/core-workshop/cloudbees-cloud-core-oc:2.176.2.3-1
+        image: gcr.io/core-workshop/cloudbees-cloud-core-oc:2176.2.4
         env:
         - name: ENVIRONMENT
           value: KUBERNETES
