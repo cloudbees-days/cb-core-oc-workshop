@@ -32,8 +32,6 @@ spec:
   - 'configMap'
   - 'persistentVolumeClaim'
   - 'projected'
-  #need to remove this once Anchore is running on K8s
-  - 'hostPath'
   hostPID: false
   hostIPC: false
   hostNetwork: false
