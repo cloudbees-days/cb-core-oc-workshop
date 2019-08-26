@@ -6,7 +6,11 @@ pipeline {
       label 'workshop-oc-update'
       defaultContainer 'jnlp'
       yaml podYaml
-}
+    }
+  }
+  options { 
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+    preserveStashes(buildCount: 5)
   }
   stages {
     stage('Update Config') {
