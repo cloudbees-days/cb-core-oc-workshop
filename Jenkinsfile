@@ -12,9 +12,10 @@ pipeline {
     stage('Update Config') {
       steps {
         container('kubectl') {
-          sh('kubectl -n cje apply -f casc.yml')
-          sh('kubectl -n cje apply -f cb-core-psp.yml')
-          sh('kubectl -n cje apply -f cb-oc.yml')
+          sh('kubectl -n cje apply -f k8s/casc.yml')
+          sh('kubectl -n cje apply -f k8s/kaniko.yml')
+          sh('kubectl -n cje apply -f k8s/cb-core-psp.yml')
+          sh('kubectl -n cje apply -f k8s/cb-oc.yml')
         } 
       }
     }
