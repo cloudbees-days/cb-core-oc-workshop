@@ -7,10 +7,11 @@ Logger logger = Logger.getLogger("init_02_create-eval-job.groovy")
 
 def j = Jenkins.instance
 
-def name = 'kubernetes shared cloud 2'
+def name = 'kubernetes shared cloud'
 logger.info("creating $name job")
 def job = j.getItem(name)
 if (job != null) {
+  logger.info("job $name already existed so deleting")
   job.delete()
 }
 println "--> creating $name"
