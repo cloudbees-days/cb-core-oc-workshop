@@ -33,11 +33,11 @@ pipeline {
       }
       steps {
         echo "preparing Jenkins CLI"
-        sh 'curl -O http://teams-ops.cje.svc.cluster.local/teams-ops/jnlpJars/jenkins-cli.jar'
-        withCredentials([usernamePassword(credentialsId: 'cli-username-token', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        sh 'curl -O http://cjoc/cjoc/jnlpJars/jenkins-cli.jar'
+        withCredentials([usernamePassword(credentialsId: 'beedemo-admin-jenkins-api-key', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
           sh """
-            alias cli='java -jar jenkins-cli.jar -s \'http://teams-ops.cje.svc.cluster.local/teams-ops/\' -auth $USERNAME:$PASSWORD'
-            cli groovy = < ~/groovy-scripts/k8s-shared-cloud.groovy
+            alias cli='java -jar jenkins-cli.jar -s \'http://cjoc/cjoc/\' -auth $USERNAME:$PASSWORD'
+            cli groovy = < groovy-scripts/k8s-shared-cloud.groovy
           """
         }
       }
