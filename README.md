@@ -4,6 +4,9 @@ K8s configuration, JCasC, etc for the workshop OC.
 ## Jenkins Config-as-Code (JCasC)
 The JCasC configuration for CJOC is managed as a K8s `ConfigMap` - see [k8s/casc.yml](k8s/casc.yml).
 
+### Groovy Scripts
+JCasC doesn't currently support all types of Jenkins configuration to include the configuration for a number of proprietary plugins for CJOC. One of those is the [Operations Center Kubernetes Cloud](https://go.cloudbees.com/docs/cloudbees-core/cloud-admin-guide/agents/#_globally_editing_pod_templates_in_operations_center). Using `groovy` scripts allows you to configure anything and everything - always had and always will. But it isn't the easiest thing to write. The nice thing about a number of CJOC proprietary features is that they are actually just Jenkins jobs. So you can retrieve the `confing.xml` for any of the special CJOC jobs and then `createProjectFromXML` method to create a jog via a groovy script. See [groovy-scripts/k8s-shared-cloud.groovy] for an example of this approach.
+
 ## Core v2 Pod Security Policies
 Kubernetes Pod Security Policies (PSP) allow controlling security sensitive aspects of the pod specification - and in the case of Core v2 on K8s that means the CJOC pod itself, master pods and agent pods.
 
