@@ -24,6 +24,7 @@ pipeline {
           sh('kubectl -n cje apply -f k8s/cb-core-psp.yml')
           sh('kubectl -n cje apply -f k8s/cb-oc.yml')
         } 
+        sleep 600
       }
     }
     stage('Run Groovy Scripts') {
@@ -38,6 +39,8 @@ pipeline {
           sh """
             alias cli='java -jar jenkins-cli.jar -s \'http://cjoc/cjoc/\' -auth $USERNAME:$PASSWORD'
             cli groovy = < groovy-scripts/k8s-shared-cloud.groovy
+            cli reload-jcasc-configuration
+            cli build update-masters -f -v
           """
         }
       }
