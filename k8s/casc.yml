@@ -16,7 +16,7 @@ data:
         enabled: false
       dockerImageDefinitionConfiguration:
         images:
-        - imageTag: "gcr.io/technologists/cb-core-mm-workshop:2176.32.2"
+        - imageTag: "gcr.io/technologists/cb-core-mm-workshop:2176.32.3"
           name: "CloudBees Core - Workshop Team Master"
       experimentalPlugins:
         enabled: false
