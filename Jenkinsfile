@@ -24,7 +24,7 @@ pipeline {
           sh('kubectl -n cje apply -f k8s/cb-core-psp.yml')
           sh('kubectl -n cje apply -f k8s/cb-oc.yml')
         } 
-        sleep 600
+        sleep 300
       }
     }
     stage('Run Groovy Scripts') {

@@ -163,6 +163,7 @@ spec:
         configMap:
           name: cjoc-casc
       securityContext:
+        runAsUser: 1000
         fsGroup: 1000
       imagePullSecrets:
       - name: docker.cloudbees.com
