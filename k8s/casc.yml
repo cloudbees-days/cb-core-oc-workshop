@@ -49,7 +49,8 @@ data:
           \        volumeMounts:\n        - name: mm-secrets\n          mountPath: /var/jenkins_home/mm-secrets\n\
           \          readOnly: true\n      volumes:\n      - name: mm-secrets\n      \
           \  secret:\n          secretName: mm-secrets\n      nodeSelector:\n        type:\
-          \ master\n"
+          \ master\n      securityContext:\n        runAsUser: 1000\n        fsGroup:\
+          \ 1000\n"
       loginTheme:
         footer: "<a target=\"_blank\" href=\"https://github.com/cloudbees-days/cloudbees-core-workshop/blob/master/Setup.md\"\
         >Setup for CloudBees Core Workshop</a>"
