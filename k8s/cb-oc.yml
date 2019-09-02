@@ -131,7 +131,7 @@ spec:
             -Dcom.cloudbees.jce.masterprovisioning.DockerImageDefinitionConfiguration.disableAutoConfiguration=true
             -Dcom.cloudbees.masterprovisioning.kubernetes.KubernetesMasterProvisioning.storageClassName=ssd
         - name: CASC_JENKINS_CONFIG
-          value: /var/jenkins_config/cjoc-casc.yml
+          value: https://raw.githubusercontent.com/kypseli/cb-core-oc-workshop-jcasc/master/jcasc.yml
         ports:
         - containerPort: 8080
         - containerPort: 50000
@@ -147,8 +147,6 @@ spec:
           mountPath: /var/jenkins_home
         - name: jenkins-configure-jenkins-groovy
           mountPath: /var/jenkins_config/configure-jenkins.groovy.d
-        - name: cjoc-casc
-          mountPath: /var/jenkins_config
         livenessProbe:
           httpGet:
             path: /cjoc/login
@@ -159,9 +157,6 @@ spec:
       - name: jenkins-configure-jenkins-groovy
         configMap:
           name: cjoc-configure-jenkins-groovy
-      - name: cjoc-casc
-        configMap:
-          name: cjoc-casc
       securityContext:
         runAsUser: 1000
         fsGroup: 1000
