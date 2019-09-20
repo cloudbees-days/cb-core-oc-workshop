@@ -1,4 +1,4 @@
 configuration-as-code:1.30
 devoptics:1.1814
-simple-theme-plugin:0.5.1
+login-theme:1.0
 
