@@ -67,6 +67,9 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: cjoc
+- kind: ServiceAccount
+  name: cjoc
+  namespace: cloud-run
 ---
 apiVersion: v1
 kind: ConfigMap
