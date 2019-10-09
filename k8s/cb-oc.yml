@@ -133,6 +133,7 @@ spec:
             -Dhudson.lifecycle=hudson.lifecycle.ExitLifecycle
             -Dcom.cloudbees.jce.masterprovisioning.DockerImageDefinitionConfiguration.disableAutoConfiguration=true
             -Dcom.cloudbees.masterprovisioning.kubernetes.KubernetesMasterProvisioning.storageClassName=ssd
+            -Dcom.cloudbees.opscenter.clouds.kubernetes.KubernetesConfiguration.autoconfigure=false
         - name: CASC_JENKINS_CONFIG
           value: https://raw.githubusercontent.com/kypseli/cb-core-oc-workshop-jcasc/master/jcasc.yml
         ports:
