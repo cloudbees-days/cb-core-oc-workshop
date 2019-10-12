@@ -2,17 +2,6 @@
 
 set -ex
 
-# Remove possible dead links (CLTS-1452)
-if [ -L "${JENKINS_HOME}/init.groovy.d" ]; then
-    echo "Broken symbolic link init.groovy.d found, deleting it..."
-    rm ${JENKINS_HOME}/init.groovy.d
-fi
-
-if [ -L "${JENKINS_HOME}/license-activated-or-renewed-after-expiration.groovy.d" ] ; then
-    echo "Broken symbolic link license-activated-or-renewed-after-expiration.groovy.d found, deleting it..."
-    rm ${JENKINS_HOME}/license-activated-or-renewed-after-expiration.groovy.d
-fi
-
 # Copy files from /usr/share/jenkins/ref into $JENKINS_HOME
 # So the initial JENKINS-HOME is set with expected content.
 # Don't override, as this is just a reference setup, and use from UI
