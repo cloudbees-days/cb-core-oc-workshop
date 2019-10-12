@@ -12,6 +12,6 @@ set-jenkins-options
 
 jenkins-cleanup
 
-deploy-groovy-scripts
+#deploy-groovy-scripts
 
 exec /usr/share/jenkins/ref/jenkins.sh "$@"
