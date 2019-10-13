@@ -18,16 +18,24 @@ import com.cloudbees.opscenter.server.properties.ConnectedMasterLicenseServerPro
 import com.cloudbees.opscenter.server.model.OperationsCenter
 
 
+String scriptName = "init_51_create_ops_master.groovy"
+
+Logger logger = Logger.getLogger(scriptName)
+
+logger.info("sleeping for 1 minute")
+sleep(60000)
+
 String masterName = "ops"
 
 if(OperationsCenter.getInstance().getConnectedMasters().any { it?.getName()==masterName }) {
-    println "Master with this name already exists."
+    logger.info("Master with this name already exists.")
     return
 }
 
 def j = Jenkins.instance
 def managedMastersFolder = j.createProject(Folder.class, "managed-masters");
 managedMastersFolder.displayName = "Managed Masters"
+managedMastersFolder.save()
 
 //create beedemo-ops api token
 def userName = 'beedemo-ops'
@@ -37,17 +45,6 @@ def user = User.get(userName, false)
 def apiTokenProperty = user.getProperty(ApiTokenProperty.class)
 def result = apiTokenProperty.tokenStore.generateNewToken(tokenName)
 user.save()
-
-//create credentials in ops folder for api token
-String id = "cli-username-token"
-Credentials c = new UsernamePasswordCredentialsImpl(CredentialsScope.GLOBAL, id, "description:"+id, userName, result.plainValue)
-
-AbstractFolder<?> folderAbs = AbstractFolder.class.cast(managedMastersFolder)
-FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
-property = new FolderCredentialsProperty([c])
-folderAbs.addProperty(property)
-println property.getCredentials().toString()
-
 
 Map props = [
 //    allowExternalAgents: false, //boolean
@@ -118,16 +115,26 @@ props.each { key, value ->
 
 ManagedMaster master = managedMastersFolder.createProject(ManagedMaster.class, masterName)
 
-println "Set config..."
+logger.info("Set config...")
 master.setConfiguration(configuration)
 master.properties.replace(new ConnectedMasterLicenseServerProperty(null))
 master.displayName = "Ops Team"
 
-println "Save..."
+logger.info("Save...")
 master.save()
 
-println "Run onModified..."
+logger.info("Run onModified...")
 master.onModified()
 
-println "Provision and start..."
+logger.info("Provision and start...")
 master.provisionAndStartAction();
+
+//create credentials in ops folder for api token
+String id = "cli-username-token"
+Credentials c = new UsernamePasswordCredentialsImpl(CredentialsScope.GLOBAL, id, "description:"+id, userName, result.plainValue)
+
+AbstractFolder<?> folderAbs = AbstractFolder.class.cast(managedMastersFolder)
+FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
+property = new FolderCredentialsProperty([c])
+folderAbs.addProperty(property)
+logger.info(property.getCredentials().toString())

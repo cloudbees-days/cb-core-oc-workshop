@@ -1,6 +1,8 @@
 import hudson.model.*;
 import jenkins.model.*;
 
+import com.cloudbees.hudson.plugins.folder.*;
+
 import java.util.logging.Logger
 
 Logger logger = Logger.getLogger("init_71_reprovision_cluster_op.groovy")
