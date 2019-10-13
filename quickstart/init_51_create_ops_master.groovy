@@ -11,7 +11,7 @@ import com.cloudbees.hudson.plugins.folder.properties.*;
 import com.cloudbees.hudson.plugins.folder.properties.FolderCredentialsProvider.FolderCredentialsProperty;
 import com.cloudbees.plugins.credentials.impl.*;
 import com.cloudbees.plugins.credentials.*;
-import com.cloudbees.plugins.credentials.domains.*;
+import com.cloudbees.plugins.credentials.domains.*; 
 import com.cloudbees.masterprovisioning.kubernetes.KubernetesMasterProvisioning
 import com.cloudbees.opscenter.server.model.ManagedMaster
 import com.cloudbees.opscenter.server.properties.ConnectedMasterLicenseServerProperty
@@ -26,8 +26,8 @@ if(OperationsCenter.getInstance().getConnectedMasters().any { it?.getName()==mas
 }
 
 def j = Jenkins.instance
-def teamsFolder = j.getItemByFullName("teams")
-def opsFolder = teamsFolder.createProject(Folder.class, "ops");
+def managedMastersFolder = j.createProject(Folder.class, "managed-masters");
+managedMastersFolder.displayName = "Managed Masters"
 
 //create beedemo-ops api token
 def userName = 'beedemo-ops'
@@ -42,7 +42,7 @@ user.save()
 String id = "cli-username-token"
 Credentials c = new UsernamePasswordCredentialsImpl(CredentialsScope.GLOBAL, id, "description:"+id, userName, result.plainValue)
 
-AbstractFolder<?> folderAbs = AbstractFolder.class.cast(opsFolder)
+AbstractFolder<?> folderAbs = AbstractFolder.class.cast(managedMastersFolder)
 FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
 property = new FolderCredentialsProperty([c])
 folderAbs.addProperty(property)
@@ -116,7 +116,7 @@ props.each { key, value ->
 }
 
 
-ManagedMaster master = opsFolder.createProject(ManagedMaster.class, masterName)
+ManagedMaster master = managedMastersFolder.createProject(ManagedMaster.class, masterName)
 
 println "Set config..."
 master.setConfiguration(configuration)
