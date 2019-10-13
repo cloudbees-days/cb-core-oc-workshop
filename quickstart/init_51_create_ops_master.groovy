@@ -121,6 +121,7 @@ ManagedMaster master = managedMastersFolder.createProject(ManagedMaster.class, m
 println "Set config..."
 master.setConfiguration(configuration)
 master.properties.replace(new ConnectedMasterLicenseServerProperty(null))
+master.displayName = "Ops Team"
 
 println "Save..."
 master.save()
