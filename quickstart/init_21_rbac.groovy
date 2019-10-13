@@ -6,6 +6,7 @@ import hudson.security.AuthorizationStrategy
 import hudson.security.FullControlOnceLoggedInAuthorizationStrategy
 import hudson.security.Permission;
 import hudson.security.PermissionGroup;
+import hudson.security.HudsonPrivateSecurityRealm
 import nectar.plugins.rbac.groups.*;
 import nectar.plugins.rbac.importers.AuthorizationStrategyImporter
 import nectar.plugins.rbac.strategy.DefaultRoleMatrixAuthorizationConfig
@@ -60,6 +61,12 @@ Jenkins jenkins = Jenkins.getInstance()
 AuthorizationStrategy authorizationStrategy = jenkins.getAuthorizationStrategy()
 
 String authorizationStrategyBefore = authorizationStrategy.getClass().getName()
+
+HudsonPrivateSecurityRealm hudsonPrivateSecurityRealm = new HudsonPrivateSecurityRealm(true, false, null)
+hudsonPrivateSecurityRealm.createAccount("admin", "changeit")
+hudsonPrivateSecurityRealm.createAccount("beedemo-ops", "changeit")
+hudsonPrivateSecurityRealm.createAccount("beedemo-dev", "changeit")
+jenkins.setSecurityRealm(hudsonPrivateSecurityRealm)
 
     String ROLE_ADMINISTER = "administer";
     String ROLE_DEVELOP = "developer";
