@@ -17,6 +17,8 @@ import com.cloudbees.opscenter.server.model.ManagedMaster
 import com.cloudbees.opscenter.server.properties.ConnectedMasterLicenseServerProperty
 import com.cloudbees.opscenter.server.model.OperationsCenter
 
+import java.util.logging.Logger
+
 
 String scriptName = "init_51_create_ops_master.groovy"
 
