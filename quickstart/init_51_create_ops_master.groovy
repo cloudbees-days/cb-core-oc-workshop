@@ -24,9 +24,6 @@ String scriptName = "init_51_create_ops_master.groovy"
 
 Logger logger = Logger.getLogger(scriptName)
 
-logger.info("sleeping for 1 minute")
-sleep(60000)
-
 String masterName = "ops"
 
 if(OperationsCenter.getInstance().getConnectedMasters().any { it?.getName()==masterName }) {
@@ -47,6 +44,16 @@ def user = User.get(userName, false)
 def apiTokenProperty = user.getProperty(ApiTokenProperty.class)
 def result = apiTokenProperty.tokenStore.generateNewToken(tokenName)
 user.save()
+
+//create credentials in ops folder for api token
+String id = "cli-username-token"
+Credentials c = new UsernamePasswordCredentialsImpl(CredentialsScope.GLOBAL, id, "description:"+id, userName, result.plainValue)
+
+AbstractFolder<?> folderAbs = AbstractFolder.class.cast(managedMastersFolder)
+FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
+property = new FolderCredentialsProperty([c])
+folderAbs.addProperty(property)
+logger.info(property.getCredentials().toString())
 
 Map props = [
 //    allowExternalAgents: false, //boolean
@@ -130,13 +137,3 @@ master.onModified()
 
 logger.info("Provision and start...")
 master.provisionAndStartAction();
-
-//create credentials in ops folder for api token
-String id = "cli-username-token"
-Credentials c = new UsernamePasswordCredentialsImpl(CredentialsScope.GLOBAL, id, "description:"+id, userName, result.plainValue)
-
-AbstractFolder<?> folderAbs = AbstractFolder.class.cast(managedMastersFolder)
-FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
-property = new FolderCredentialsProperty([c])
-folderAbs.addProperty(property)
-logger.info(property.getCredentials().toString())

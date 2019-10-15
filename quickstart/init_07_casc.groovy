@@ -2,7 +2,7 @@ import io.jenkins.plugins.casc.ConfigurationAsCode;
 
 import java.util.logging.Logger
 
-String scriptName = "init_7_casc.groovy"
+String scriptName = "init_07_casc.groovy"
 
 Logger logger = Logger.getLogger(scriptName)
 
