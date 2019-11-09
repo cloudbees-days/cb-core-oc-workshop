@@ -71,7 +71,7 @@ Map props = [
 //    livenessPeriodSeconds: 10, //Integer
 //    livenessTimeoutSeconds: 10, //Integer
       memory: 3060, //Integer
-      namespace: "core-demo", //String
+      namespace: "mm-ops", //String
 //    ratio: 0.7, //Double
       storageClassName: "ssd", //String
       systemProperties:"cb.IMProp.warProfiles=bluesteel-core.json", //String
