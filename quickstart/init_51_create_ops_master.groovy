@@ -32,8 +32,8 @@ if(OperationsCenter.getInstance().getConnectedMasters().any { it?.getName()==mas
 }
 
 def j = Jenkins.instance
-def foldername = "managed-masters"
-def managedMastersFolder = jenkins.getItem(folderName)
+def folderName = "managed-masters"
+def managedMastersFolder = j.getItem(folderName)
 if (managedMastersFolder == null) {
   // Create the folder if it doesn't exist or if no existing job has the same name
   managedMastersFolder = jenkins.createProject(Folder.class, folderName)
