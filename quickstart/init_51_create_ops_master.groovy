@@ -32,9 +32,14 @@ if(OperationsCenter.getInstance().getConnectedMasters().any { it?.getName()==mas
 }
 
 def j = Jenkins.instance
-def managedMastersFolder = j.createProject(Folder.class, "managed-masters");
-managedMastersFolder.displayName = "Managed Masters"
-managedMastersFolder.save()
+def foldername = "managed-masters"
+def managedMastersFolder = jenkins.getItem(folderName)
+if (managedMastersFolder == null) {
+  // Create the folder if it doesn't exist or if no existing job has the same name
+  managedMastersFolder = jenkins.createProject(Folder.class, folderName)
+  managedMastersFolder.displayName = "Managed Masters"
+  managedMastersFolder.save()
+}
 
 //create beedemo-ops api token
 def userName = 'beedemo-ops'
