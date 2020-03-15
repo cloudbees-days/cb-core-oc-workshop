@@ -1,4 +1,4 @@
-configuration-as-code:1.33
+configuration-as-code:1.36
 devoptics:1.1863
 login-theme:1.0
 operations-center-notification:1.0
