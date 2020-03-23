@@ -92,7 +92,7 @@ jenkins.setSecurityRealm(hudsonPrivateSecurityRealm)
      }
      //workshop role
      roles.get(Item.CREATE.getId()).add(ROLE_WORKSHOP);
-     roles.get(Item.PROMOTE.getId()).add(ROLE_WORKSHOP);
+     roles.get("hudson.model.Item.Promote").add(ROLE_WORKSHOP);
      
      roles.get(Jenkins.READ.getId()).add(ROLE_BROWSE);
      roles.get(Item.DISCOVER.getId()).add(ROLE_BROWSE);
@@ -119,12 +119,10 @@ jenkins.setSecurityRealm(hudsonPrivateSecurityRealm)
 
     //Create Workshop Group with workshop role and all authenticated users as members in Teams folder
     teamsFolder = jenkins.getItem("Teams")
-
     if (teamsFolder == null) {
-    println("teamsFolder does not exist so creating")
-    jenkins.createProject(Folder.class, "Teams");
+        println("teamsFolder does not exist so creating")
+        jenkins.createProject(Folder.class, "Teams");
     }
-
     String groupName = "Workshop"
     GroupContainer workshopGroupContainer = GroupContainerLocator.locate(teamsFolder)
     Group workshopGroup = new Group(workshopGroupContainer, groupName)
