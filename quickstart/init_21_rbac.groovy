@@ -13,6 +13,7 @@ import nectar.plugins.rbac.strategy.DefaultRoleMatrixAuthorizationConfig
 import nectar.plugins.rbac.strategy.RoleMatrixAuthorizationConfig
 import nectar.plugins.rbac.strategy.RoleMatrixAuthorizationPlugin
 import nectar.plugins.rbac.strategy.RoleMatrixAuthorizationStrategyImpl
+import com.cloudbees.hudson.plugins.folder.*;
 import com.cloudbees.opscenter.server.security.SecurityEnforcer;
 import com.cloudbees.opscenter.server.sso.SecurityEnforcerImpl
 import java.lang.reflect.Field;
@@ -71,6 +72,7 @@ jenkins.setSecurityRealm(hudsonPrivateSecurityRealm)
     String ROLE_ADMINISTER = "administer";
     String ROLE_DEVELOP = "developer";
     String ROLE_BROWSE = "browse";
+    String ROLE_WORKSHOP = "workshop";
     PermissionGroup[] DEVELOP_PERMISSION_GROUPS = [Item.PERMISSIONS, SCM.PERMISSIONS, Run.PERMISSIONS, View.PERMISSIONS];
 
      RoleMatrixAuthorizationPlugin matrixAuthorizationPlugin = RoleMatrixAuthorizationPlugin.getInstance()
@@ -88,9 +90,14 @@ jenkins.setSecurityRealm(hudsonPrivateSecurityRealm)
              roles.get(p.getId()).add(ROLE_DEVELOP);
          }
      }
+     //workshop role
+     roles.get(Item.CREATE.getId()).add(ROLE_WORKSHOP);
+     roles.get(Item.PROMOTE.getId()).add(ROLE_WORKSHOP);
+     
      roles.get(Jenkins.READ.getId()).add(ROLE_BROWSE);
      roles.get(Item.DISCOVER.getId()).add(ROLE_BROWSE);
      roles.get(Item.READ.getId()).add(ROLE_BROWSE);
+
      config.setRolesByPermissionIdMap(roles);
      config.setFilterableRoles(new HashSet<String>(Arrays.asList(ROLE_BROWSE, ROLE_DEVELOP)));
      List<Group> rootGroups = new ArrayList<Group>();
@@ -102,7 +109,6 @@ jenkins.setSecurityRealm(hudsonPrivateSecurityRealm)
      g.setRoleAssignments(Collections.singletonList(new Group.RoleAssignment(ROLE_ADMINISTER)));
      rootGroups.add(g);
      g = new Group("Developers");
-     g.setMembers(Collections.singletonList("beedemo-dev"));
      g.setRoleAssignments(Collections.singletonList(new Group.RoleAssignment(ROLE_DEVELOP)));
      rootGroups.add(g);
      g = new Group("Browsers");
@@ -110,6 +116,21 @@ jenkins.setSecurityRealm(hudsonPrivateSecurityRealm)
      g.setRoleAssignments(Collections.singletonList(new Group.RoleAssignment(ROLE_BROWSE)));
      rootGroups.add(g);
      config.setGroups(rootGroups);
+
+    //Create Workshop Group with workshop role and all authenticated users as members in Teams folder
+    teamsFolder = jenkins.getItem("Teams")
+
+    if (teamsFolder == null) {
+    println("teamsFolder does not exist so creating")
+    jenkins.createProject(Folder.class, "Teams");
+    }
+
+    String groupName = "Workshop"
+    GroupContainer workshopGroupContainer = GroupContainerLocator.locate(teamsFolder)
+    Group workshopGroup = new Group(workshopGroupContainer, groupName)
+    workshopGroup.doAddMember("authenticated");
+    workshopGroup.setRoleAssignments(Collections.singletonList(new Group.RoleAssignment(ROLE_WORKSHOP)));
+    workshopGroupContainer.addGroup(workshopGroup)
 
      matrixAuthorizationPlugin.configuration = config
      matrixAuthorizationPlugin.save()
