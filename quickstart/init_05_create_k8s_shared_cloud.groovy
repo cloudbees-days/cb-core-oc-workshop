@@ -1,15 +1,20 @@
-import hudson.model.*;
+import com.cloudbees.hudson.plugins.folder.*;
+import com.cloudbees.opscenter.bluesteel.BlueSteelConstants;
 import jenkins.model.*;
+import java.util.logging.Logger;
 
-import java.util.logging.Logger
-
-Logger logger = Logger.getLogger("init_02_create-eval-job.groovy")
+Logger logger = Logger.getLogger("k8s-shared-cloud.groovy")
 
 def j = Jenkins.instance
 
+def teamsFolder = j.getItemByFullName(BlueSteelConstants.CJOC_TEAMS_FOLDER_NAME)
+if (teamsFolder == null) {
+    teamsFolder = j.createProject(Folder.class, BlueSteelConstants.CJOC_TEAMS_FOLDER_NAME);
+}
+
 def name = 'kubernetes shared cloud'
 logger.info("creating $name job")
-def job = j.getItem(name)
+def job = teamsFolder.getItem(name)
 if (job != null) {
   logger.info("job $name already existed so deleting")
   job.delete()
@@ -17,13 +22,13 @@ if (job != null) {
 println "--> creating $name"
 
 def configXml = """
-<com.cloudbees.opscenter.clouds.kubernetes.KubernetesConfiguration plugin="operations-center-kubernetes-cloud@2.176.0.1">
+<com.cloudbees.opscenter.clouds.kubernetes.KubernetesConfiguration plugin="operations-center-kubernetes-cloud@2.204.0.1">
   <actions/>
   <description></description>
   <snippets>
     <com.cloudbees.opscenter.clouds.kubernetes.KubernetesCloudConfigurationSnippet>
       <value>
-        <string>&lt;org.csanchez.jenkins.plugins.kubernetes.KubernetesCloud plugin=&quot;kubernetes@1.15.9&quot;&gt;
+        <string>&lt;org.csanchez.jenkins.plugins.kubernetes.KubernetesCloud plugin=&quot;kubernetes@1.21.4&quot;&gt;
   &lt;name&gt;kubernetes&lt;/name&gt;
   &lt;defaultsProviderTemplate&gt;default-jnlp&lt;/defaultsProviderTemplate&gt;
   &lt;templates&gt;
@@ -32,6 +37,8 @@ def configXml = """
       &lt;name&gt;default-jnlp&lt;/name&gt;
       &lt;namespace&gt;&lt;/namespace&gt;
       &lt;privileged&gt;false&lt;/privileged&gt;
+      &lt;runAsUser&gt;1000&lt;/runAsUser&gt;
+      &lt;runAsGroup&gt;1000&lt;/runAsGroup&gt;
       &lt;capOnlyOnAlivePods&gt;false&lt;/capOnlyOnAlivePods&gt;
       &lt;alwaysPullImage&gt;false&lt;/alwaysPullImage&gt;
       &lt;instanceCap&gt;2147483647&lt;/instanceCap&gt;
@@ -40,9 +47,9 @@ def configXml = """
       &lt;activeDeadlineSeconds&gt;0&lt;/activeDeadlineSeconds&gt;
       &lt;label&gt;default-jnlp&lt;/label&gt;
       &lt;serviceAccount&gt;jenkins&lt;/serviceAccount&gt;
-      &lt;nodeSelector&gt;type=agent&lt;/nodeSelector&gt;
+      &lt;nodeSelector&gt;&lt;/nodeSelector&gt;
       &lt;nodeUsageMode&gt;NORMAL&lt;/nodeUsageMode&gt;
-      &lt;customWorkspaceVolumeEnabled&gt;false&lt;/customWorkspaceVolumeEnabled&gt;
+      &lt;hostNetwork&gt;false&lt;/hostNetwork&gt;
       &lt;workspaceVolume class=&quot;org.csanchez.jenkins.plugins.kubernetes.volumes.workspace.EmptyDirWorkspaceVolume&quot;&gt;
         &lt;memory&gt;false&lt;/memory&gt;
       &lt;/workspaceVolume&gt;
@@ -55,7 +62,7 @@ def configXml = """
       &lt;containers&gt;
         &lt;org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate&gt;
           &lt;name&gt;jnlp&lt;/name&gt;
-          &lt;image&gt;gcr.io/technologists/k8s-jnlp-agent:0.0.5&lt;/image&gt;
+          &lt;image&gt;gcr.io/core-workshop/k8s-jnlp-agent@sha256:28490f8659bcfdae8159286d6c88fdd7365d6928255103e7500f05dd527bdc8f&lt;/image&gt;
           &lt;privileged&gt;false&lt;/privileged&gt;
           &lt;alwaysPullImage&gt;false&lt;/alwaysPullImage&gt;
           &lt;workingDir&gt;/home/jenkins&lt;/workingDir&gt;
@@ -64,8 +71,8 @@ def configXml = """
           &lt;ttyEnabled&gt;true&lt;/ttyEnabled&gt;
           &lt;resourceRequestCpu&gt;500m&lt;/resourceRequestCpu&gt;
           &lt;resourceRequestMemory&gt;500Mi&lt;/resourceRequestMemory&gt;
-          &lt;resourceLimitCpu&gt;1&lt;/resourceLimitCpu&gt;
-          &lt;resourceLimitMemory&gt;3Gi&lt;/resourceLimitMemory&gt;
+          &lt;resourceLimitCpu&gt;&lt;/resourceLimitCpu&gt;
+          &lt;resourceLimitMemory&gt;&lt;/resourceLimitMemory&gt;
           &lt;envVars/&gt;
           &lt;ports/&gt;
           &lt;livenessProbe&gt;
@@ -82,27 +89,6 @@ def configXml = """
       &lt;annotations/&gt;
       &lt;imagePullSecrets/&gt;
       &lt;nodeProperties/&gt;
-      &lt;yamls class=&quot;singleton-list&quot;&gt;
-        &lt;string&gt;apiVersion: v1
-kind: Pod
-metadata:
-  name: default-jnlp
-spec:
-  containers:
-  - args:
-    - /var/jenkins_config/jenkins-agent
-    command:
-    - /bin/sh
-    image: gcr.io/technologists/k8s-jnlp-agent:0.0.5
-    imagePullPolicy: IfNotPresent
-    name: jnlp
-    resources: {}
-    tty: true
-    securityContext:
-      runAsUser: 1000
-  securityContext:
-    runAsUser: 1000&lt;/string&gt;
-      &lt;/yamls&gt;
       &lt;yamlMergeStrategy class=&quot;org.csanchez.jenkins.plugins.kubernetes.pod.yaml.Overrides&quot;/&gt;
       &lt;showRawYaml&gt;true&lt;/showRawYaml&gt;
       &lt;podRetention class=&quot;org.csanchez.jenkins.plugins.kubernetes.pod.retention.Default&quot;/&gt;
@@ -112,10 +98,17 @@ spec:
   &lt;skipTlsVerify&gt;false&lt;/skipTlsVerify&gt;
   &lt;addMasterProxyEnvVars&gt;false&lt;/addMasterProxyEnvVars&gt;
   &lt;capOnlyOnAlivePods&gt;false&lt;/capOnlyOnAlivePods&gt;
-  &lt;containerCap&gt;2147483647&lt;/containerCap&gt;
+  &lt;directConnection&gt;false&lt;/directConnection&gt;
+  &lt;containerCap&gt;10&lt;/containerCap&gt;
   &lt;retentionTimeout&gt;5&lt;/retentionTimeout&gt;
-  &lt;connectTimeout&gt;0&lt;/connectTimeout&gt;
-  &lt;readTimeout&gt;0&lt;/readTimeout&gt;
+  &lt;connectTimeout&gt;5&lt;/connectTimeout&gt;
+  &lt;readTimeout&gt;15&lt;/readTimeout&gt;
+  &lt;podLabels&gt;
+    &lt;org.csanchez.jenkins.plugins.kubernetes.PodLabel&gt;
+      &lt;key&gt;jenkins&lt;/key&gt;
+      &lt;value&gt;slave&lt;/value&gt;
+    &lt;/org.csanchez.jenkins.plugins.kubernetes.PodLabel&gt;
+  &lt;/podLabels&gt;
   &lt;usageRestricted&gt;false&lt;/usageRestricted&gt;
   &lt;maxRequestsPerHost&gt;32&lt;/maxRequestsPerHost&gt;
   &lt;waitForPodSec&gt;600&lt;/waitForPodSec&gt;
@@ -127,4 +120,4 @@ spec:
   <properties/>
 </com.cloudbees.opscenter.clouds.kubernetes.KubernetesConfiguration>
 """
-def p = j.createProjectFromXML(name, new ByteArrayInputStream(configXml.getBytes("UTF-8")));
+def p = teamsFolder.createProjectFromXML(name, new ByteArrayInputStream(configXml.getBytes("UTF-8")));
