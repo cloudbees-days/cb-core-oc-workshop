@@ -55,6 +55,13 @@ property = new FolderCredentialsProperty([c])
 folderAbs.addProperty(property)
 logger.info(property.getCredentials().toString())
 
+//also need cli-username-token credential at Teams folder level for workshop setup 
+teamsFolder = j.getItem("Teams")
+AbstractFolder<?> folderAbs = AbstractFolder.class.cast(teamsFolder)
+FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
+property = new FolderCredentialsProperty([c])
+folderAbs.addProperty(property)
+
 Map props = [
 //    allowExternalAgents: false, //boolean
 //    clusterEndpointId: "default", //String
@@ -71,7 +78,7 @@ Map props = [
 //    livenessPeriodSeconds: 10, //Integer
 //    livenessTimeoutSeconds: 10, //Integer
       memory: 3060, //Integer
-      namespace: "mm-ops", //String
+//    namespace: "mm-ops", //String
 //    ratio: 0.7, //Double
       storageClassName: "ssd", //String
 //    terminationGracePeriodSeconds: 1200, //Integer
