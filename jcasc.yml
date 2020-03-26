@@ -1,0 +1,26 @@
+jenkins:
+  agentProtocols:
+  - "Diagnostic-Ping"
+  - "JNLP4-connect"
+  - "OperationsCenter2"
+  - "Ping"
+unclassified:
+  contentFilters:
+    enabled: false
+  loginTheme:
+    footer: "<a target=\"_blank\" href=\"https://github.com/cloudbees-days/cloudbees-core-workshop/blob/master/Setup.md\"\
+      >Setup for CloudBees Core Workshop</a>"
+    head: "  <style>\n    #loginIntroDefault { margin-bottom: 0; }\n    #loginIntroDefault\
+      \ h1 { display: none; }\n    #loginIntro h2 { font-size: 16px; }\n    .simple-page\
+      \ form  { \n      width: auto; \n      min-width: 360px;\n      max-width: 400px;\n\
+      \    }\n    .simple-page .logo {\n        background-image: url('https://avatars0.githubusercontent.com/u/47866591?s=200&v=4');\n\
+      \        background-repeat: no-repeat;\n        background-position: 50% 0;\n\
+      \        height: 200px;\n    }\n    .simple-page .footer {\n        padding-top:\
+      \ 10px;\n        font-weight: 15pt;\n    }\n  </style>"
+    header: |-
+      <div id="loginIntro">
+        <h1 id="productName">CloudBees Core Workshop</h1>
+      </div>
+    useDefaultTheme: true 
+  operationsCenterSharedConfiguration:
+    enabled: false
