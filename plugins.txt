@@ -1,4 +1,4 @@
-configuration-as-code:1.36
+configuration-as-code:1.38
 login-theme:1.0
 operations-center-notification:1.0
 notification-api:1.2

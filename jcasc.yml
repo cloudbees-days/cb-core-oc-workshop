@@ -8,8 +8,9 @@ unclassified:
   contentFilters:
     enabled: false
   loginTheme:
-    footer: "<a target=\"_blank\" href=\"https://github.com/cloudbees-days/cloudbees-core-workshop/blob/master/Setup.md\"\
-      >Setup for CloudBees Core Workshop</a>"
+    footer: |-
+      <a target="_blank" href="https://github.com/cloudbees-days/core-rollout-flow-workshop#labs">CloudBees Core Workshop Labs</a>
+      <a target="_blank" href="https://cloudbees-days.github.io/core-rollout-flow-workshop/core/#1">CloudBees Core Workshop Slides</a>
     head: "  <style>\n    #loginIntroDefault { margin-bottom: 0; }\n    #loginIntroDefault\
       \ h1 { display: none; }\n    #loginIntro h2 { font-size: 16px; }\n    .simple-page\
       \ form  { \n      width: auto; \n      min-width: 360px;\n      max-width: 400px;\n\
