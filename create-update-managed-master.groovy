@@ -173,7 +173,7 @@ private static void setBundleSecurity(String masterName, boolean regenerateBundl
     sleep(100)
     ExtensionList.lookupSingleton(BundleStorage.class).initialize()
     BundleStorage.AccessControl accessControl = ExtensionList.lookupSingleton(BundleStorage.class).getAccessControl()
-    accessControl.updateMasterPath(masterName, masterName)
+    accessControl.updateMasterPath(masterName, "teams/" + masterName)
     if (regenerateBundleToken) {
         accessControl.regenerate(masterName)
     }
