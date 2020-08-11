@@ -56,9 +56,8 @@ bundle:
   - id: cloudbees-github-reporting
 provisioning:
   cpus: 1.9
-  disk: 5
-  envVars: "TEST=value1\\nTEST2=values2"
-  memory: 3500
+  disk: 10
+  memory: 3600
   yaml: |
     kind: Service
     metadata:
@@ -80,7 +79,7 @@ if (OperationsCenter.getInstance().getConnectedMasters().any { it?.getName() == 
 } else {
     createMM(masterName, masterDefinition)
 }
-sleep(50)
+sleep(150)
 println("Finished with master '${masterName}'.\n")
 
 
