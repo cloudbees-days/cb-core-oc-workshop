@@ -12,6 +12,8 @@ import jenkins.model.Jenkins
 import org.apache.commons.io.FileUtils
 
 if (args.length != 1 ) {
+  println "args[0]: " + args[0]
+  println "args[1]: " + args[1]
   println “Error: invalid arguments!”
   return
 }
