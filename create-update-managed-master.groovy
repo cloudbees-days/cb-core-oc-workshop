@@ -11,7 +11,12 @@ import io.fabric8.kubernetes.client.utils.Serialization
 import jenkins.model.Jenkins
 import org.apache.commons.io.FileUtils
 
-String masterName = "REPLACE_MASTER_NAME"
+if (args.length != 1 ) {
+  println “Error: invalid arguments!”
+  return
+}
+
+String masterName = args[0] 
 String masterDefinitionYaml = """
 bundle:
   jcasc:
