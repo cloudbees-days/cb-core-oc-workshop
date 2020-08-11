@@ -11,7 +11,11 @@ import io.fabric8.kubernetes.client.utils.Serialization
 import jenkins.model.Jenkins
 import org.apache.commons.io.FileUtils
 
-String masterName = "master6"
+if (args.length != 1 ) {
+  println “Error: invalid arguments!”
+}
+
+String masterName = args[0] 
 String masterDefinitionYaml = """
 bundle:
   jcasc:
@@ -34,21 +38,16 @@ bundle:
   plugins:
   - id: cloudbees-disk-usage-simple
   - id: cloudbees-groovy-view
-  - id: cloudbees-jsync-archiver
   - id: cloudbees-monitoring
   - id: cloudbees-nodes-plus
-  - id: cloudbees-ssh-slaves
   - id: cloudbees-template
   - id: cloudbees-view-creation-filter
   - id: cloudbees-workflow-template
   - id: cloudbees-workflow-ui
   - id: configuration-as-code
-  - id: ec2
-  - id: email-ext
   - id: extended-read-permission
   - id: git
   - id: github-branch-source
-  - id: infradna-backup
   - id: ldap
   - id: maven-plugin
   - id: operations-center-cloud
@@ -58,6 +57,7 @@ bundle:
   - id: wikitext
   - id: workflow-aggregator
   - id: workflow-cps-checkpoint
+  - id: cloudbees-github-reporting
 provisioning:
   cpus: 1.9
   disk: 5
@@ -102,7 +102,8 @@ private void createMM(String masterName, def masterDefinition) {
         configuration["${k}"] = v
     }
 
-    ManagedMaster master = Jenkins.instance.createProject(ManagedMaster.class, masterName)
+  def teamsFolder = Jenkins.instance.getItem('teams')  
+  ManagedMaster master = teamsFolder.createProject(ManagedMaster.class, masterName)
     master.setConfiguration(configuration)
     master.properties.replace(new ConnectedMasterLicenseServerProperty(null))
     master.save()
