@@ -16,11 +16,13 @@ String masterDefinitionYaml = """
 bundle:
   jcasc:
     jenkins:
-      systemMessage: 'Jenkins configured using master jcasc'
+      systemMessage: 'Jenkins configured using CloudBees CI CasC'
   pluginCatalog:
     configurations:
     - description: tier 3 plugins
       includePlugins:
+        cloudbees-github-reporting:
+          version: "1.1"
         cloudbees-disk-usage-simple:
           version: "0.10"
         extended-read-permission:
