@@ -21,16 +21,14 @@ bundle:
     configurations:
     - description: tier 3 plugins
       includePlugins:
-        cloudbees-github-reporting:
-          version: "1.1"
         cloudbees-disk-usage-simple:
           version: "0.10"
         extended-read-permission:
           version: "3.2"
         prometheus:
           version: 2.0.7
-    displayName: Catalog For master1
-    name: catalog for master1
+    displayName: CloudBees CI Workshop Plugin Catalog
+    name: cbci-workshop-catalog
     type: plugin-catalog
     version: "1"
   plugins:
