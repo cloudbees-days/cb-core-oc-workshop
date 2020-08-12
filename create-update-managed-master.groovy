@@ -17,6 +17,13 @@ bundle:
   jcasc:
     jenkins:
       systemMessage: 'Jenkins configured using CloudBees CI CasC'
+    unclassified:
+      hibernationConfiguration:
+        activities:
+        - "build"
+        - "web"
+        enabled: true
+        gracePeriod: 7200
   pluginCatalog:
     configurations:
     - description: tier 3 plugins
