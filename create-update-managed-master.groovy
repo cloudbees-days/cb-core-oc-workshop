@@ -33,6 +33,7 @@ bundle:
     version: "1"
   plugins:
   - id: cloudbees-disk-usage-simple
+  - id: cloudbees-github-reporting
   - id: cloudbees-groovy-view
   - id: cloudbees-monitoring
   - id: cloudbees-nodes-plus
@@ -45,6 +46,7 @@ bundle:
   - id: git
   - id: github-branch-source
   - id: ldap
+  - id: managed-master-hibernation
   - id: maven-plugin
   - id: operations-center-cloud
   - id: pipeline-model-extensions
@@ -53,7 +55,6 @@ bundle:
   - id: wikitext
   - id: workflow-aggregator
   - id: workflow-cps-checkpoint
-  - id: cloudbees-github-reporting
 provisioning:
   cpus: 1.9
   disk: 10
