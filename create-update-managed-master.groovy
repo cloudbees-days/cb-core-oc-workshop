@@ -77,6 +77,22 @@ provisioning:
         prometheus.io/path: '/${masterName}/prometheus'
         prometheus.io/port: '8080'
         prometheus.io/scrape: 'true'
+    kind: "StatefulSet"
+    spec:
+      template:
+        spec:
+          containers:
+          - name: "jenkins"
+            env:
+            - name: "SECRETS"
+              value: "/var/jenkins_home/jcasc_secrets"
+            volumeMounts:
+            - mountPath: "/var/jenkins_home/jcasc_secrets"
+              name: "mm-casc-secrets"
+          volumes:
+          - name: "mm-casc-secrets"
+            secret:
+              secretName: "mm-casc-secrets"    
 """
 
 def yamlMapper = Serialization.yamlMapper()
