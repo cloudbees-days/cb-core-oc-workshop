@@ -30,6 +30,8 @@ bundle:
       includePlugins:
         cloudbees-disk-usage-simple:
           version: "0.10"
+        cloudbees-msteams:
+          url: "https://storage.googleapis.com/core-workshop-plugins/cloudbees-msteams-0.2.hpi"  
         extended-read-permission:
           version: "3.2"
         prometheus:
@@ -43,6 +45,7 @@ bundle:
   - id: cloudbees-github-reporting
   - id: cloudbees-groovy-view
   - id: cloudbees-monitoring
+  - id: cloudbees-msteams
   - id: cloudbees-nodes-plus
   - id: cloudbees-template
   - id: cloudbees-view-creation-filter
