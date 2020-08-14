@@ -89,10 +89,16 @@ provisioning:
             volumeMounts:
             - mountPath: "/var/jenkins_home/jcasc_secrets"
               name: "mm-casc-secrets"
+            - mountPath: "/var/jenkins_config/configure-jenkins.groovy.d/"
+              name: "managed-controller-rbac"
           volumes:
           - name: "mm-casc-secrets"
             secret:
-              secretName: "mm-casc-secrets"    
+              secretName: "mm-casc-secrets"
+          - name: managed-controller-rbac
+            configMap:
+              defaultMode: 420
+              name: managed-controller-rbac
 """
 
 def yamlMapper = Serialization.yamlMapper()
