@@ -162,7 +162,7 @@ private void createMM(String masterName, def masterDefinition) {
     def groupItem = teamsFolder.getItem(masterName);
     def container = GroupContainerLocator.locate(groupItem);
     if(!container.getGroups().any{it.name=groupName}) {
-      Group group = new Group(groupName);
+      Group group = new Group(container, groupName);
       group.doAddMember(masterName);
       group.doGrantRole(roleName, 0, Boolean.TRUE);
       container.addGroup(group);
