@@ -6,6 +6,9 @@ import com.cloudbees.opscenter.server.casc.BundleStorage
 import com.cloudbees.opscenter.server.model.ManagedMaster
 import com.cloudbees.opscenter.server.model.OperationsCenter
 import com.cloudbees.opscenter.server.properties.ConnectedMasterLicenseServerProperty
+import com.cloudbees.hudson.plugins.folder.Folder;
+import nectar.plugins.rbac.groups.Group;
+import nectar.plugins.rbac.groups.GroupContainerLocator;
 import hudson.ExtensionList
 import io.fabric8.kubernetes.client.utils.Serialization
 import jenkins.model.Jenkins
@@ -153,6 +156,18 @@ private void createMM(String masterName, def masterDefinition) {
     } else {
         throw "Cannot start the master." as Throwable
     }
+    def Jenkins jenkins = Jenkins.getInstance()
+    def roleName = "administer"
+    def groupName = "Team Administrators"
+
+    def container = GroupContainerLocator.locate(masterName);
+    if(!container.getGroups().any{it.name=groupName}) {
+      Group group = new Group(groupName);
+      group.doAddMember(masterName);
+      group.doGrantRole(roleName, 0, Boolean.TRUE);
+      container.addGroup(group);
+    }
+    sleep(500)
 }
 
 private void updateMM(String masterName, def masterDefinition) {
