@@ -159,9 +159,8 @@ private void createMM(String masterName, def masterDefinition) {
     def Jenkins jenkins = Jenkins.getInstance()
     String roleName = "administer"
     String groupName = "Team Administrators";
-
-	  def teamsFolder = jenkins.getItem("teams")
-	  def groupItem = teamsFolder.getItem(masterName);
+    def teamsFolder = jenkins.getItem("teams")
+    def groupItem = teamsFolder.getItem(masterName);
     def container = GroupContainerLocator.locate(groupItem);
     if(!container.getGroups().any{it.name=groupName}) {
       Group group = new Group(groupName);
