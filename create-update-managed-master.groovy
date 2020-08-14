@@ -157,10 +157,12 @@ private void createMM(String masterName, def masterDefinition) {
         throw "Cannot start the master." as Throwable
     }
     def Jenkins jenkins = Jenkins.getInstance()
-    def roleName = "administer"
-    def groupName = "Team Administrators"
+    String roleName = "administer"
+    String groupName = "Team Administrators";
 
-    def container = GroupContainerLocator.locate(masterName);
+	  def teamsFolder = jenkins.getItem("teams")
+	  def groupItem = teamsFolder.getItem(masterName);
+    def container = GroupContainerLocator.locate(groupItem);
     if(!container.getGroups().any{it.name=groupName}) {
       Group group = new Group(groupName);
       group.doAddMember(masterName);
