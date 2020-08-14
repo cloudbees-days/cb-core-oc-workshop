@@ -157,7 +157,7 @@ private void createMM(String masterName, def masterDefinition) {
         throw "Cannot start the master." as Throwable
     }
     def Jenkins jenkins = Jenkins.getInstance()
-    String roleName = "administer"
+    String roleName = "workshop-admin"
     String groupName = "Team Administrators";
     def groupItem = teamsFolder.getItem(masterName);
     def container = GroupContainerLocator.locate(groupItem);
