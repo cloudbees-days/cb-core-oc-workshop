@@ -100,6 +100,7 @@ provisioning:
     type: Opaque
     data:
       github-pat: ${gitHubPAT}
+    ---  
     kind: Service
     metadata:
       annotations:
@@ -118,7 +119,7 @@ provisioning:
               value: "/var/jenkins_home/jcasc_secrets"
             volumeMounts:
             - mountPath: "/var/jenkins_home/jcasc_secrets"
-              name: "mm-casc-secrets":
+              name: "mm-casc-secrets"
             - mountPath: "/var/jenkins_home/jcasc_secrets"
               name: "mm-casc-pat"
           volumes:
