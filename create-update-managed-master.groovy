@@ -28,6 +28,24 @@ bundle:
         - "web"
         enabled: true
         gracePeriod: 7200
+    credentials:
+      system:
+        domainCredentials:
+          - domain :
+              name: "github.com"
+              description: "GitHub"
+            credentials:
+              - string:
+                  scope: GLOBAL
+                  id: github-token-secret
+                  description: "GitHub PAT from JCasC - secret text"
+                  secret: "\${github-pat}"
+              - usernamePassword:
+                  scope: GLOBAL
+                  id: github-username-pat
+                  description: "GitHub PAT from JCasC - username/password"
+                  username: "${masterName}"
+                  password: "\${github-pat}"
   pluginCatalog:
     configurations:
     - description: tier 3 plugins
