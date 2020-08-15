@@ -126,7 +126,7 @@ provisioning:
           - name: "mm-casc-secrets"
             secret:
               secretName: "mm-casc-secrets"
-          - name: "mm-casc-pat}"
+          - name: "mm-casc-pat"
             secret:
               secretName: "mm-casc-pat-${masterName}"
 """
