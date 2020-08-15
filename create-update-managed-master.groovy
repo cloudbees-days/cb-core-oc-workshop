@@ -119,13 +119,8 @@ provisioning:
               value: "/var/jenkins_home/jcasc_secrets"
             volumeMounts:
             - mountPath: "/var/jenkins_home/jcasc_secrets"
-              name: "mm-casc-secrets"
-            - mountPath: "/var/jenkins_home/jcasc_secrets"
               name: "mm-casc-pat"
           volumes:
-          - name: "mm-casc-secrets"
-            secret:
-              secretName: "mm-casc-secrets"
           - name: "mm-casc-pat"
             secret:
               secretName: "mm-casc-pat-${masterName}"
