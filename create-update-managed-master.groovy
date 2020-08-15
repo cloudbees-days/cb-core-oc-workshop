@@ -16,6 +16,7 @@ import org.apache.commons.io.FileUtils
 
 String masterName = "REPLACE_MASTER_NAME" 
 String masterDefinitionYaml = """
+String gitHubPAT = "REPLACE_GITHUB_PAT".bytes.encodeBase64().toString()
 bundle:
   jcasc:
     jenkins:
@@ -73,6 +74,14 @@ provisioning:
   disk: 10
   memory: 3600
   yaml: |
+    kind: Secret
+    apiVersion: v1
+    metadata:
+      name: mm-casc-pat-${masterName}
+      namespace: cloudbees-core
+    type: Opaque
+    data:
+      github-pat: ${gitHubPAT}
     kind: Service
     metadata:
       annotations:
