@@ -15,8 +15,8 @@ import jenkins.model.Jenkins
 import org.apache.commons.io.FileUtils
 
 String masterName = "REPLACE_MASTER_NAME" 
-String masterDefinitionYaml = """
 String gitHubPAT = "REPLACE_GITHUB_PAT".bytes.encodeBase64().toString()
+String masterDefinitionYaml = """
 bundle:
   jcasc:
     jenkins:
