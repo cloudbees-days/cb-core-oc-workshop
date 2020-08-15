@@ -84,6 +84,7 @@ bundle:
   - id: pipeline-model-extensions
   - id: pipeline-stage-view
   - id: prometheus
+  - id: warnings-ng
   - id: wikitext
   - id: workflow-aggregator
   - id: workflow-cps-checkpoint
