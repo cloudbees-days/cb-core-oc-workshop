@@ -15,6 +15,7 @@ import jenkins.model.Jenkins
 import org.apache.commons.io.FileUtils
 
 String masterName = "REPLACE_MASTER_NAME" 
+String jenkinsUserId = "REPLACE_JENKINS_USER"
 String gitHubPAT = "REPLACE_GITHUB_PAT".bytes.encodeBase64().toString()
 String masterDefinitionYaml = """
 bundle:
@@ -192,7 +193,7 @@ private void createMM(String masterName, def masterDefinition) {
     def container = GroupContainerLocator.locate(groupItem);
     if(!container.getGroups().any{it.name=groupName}) {
       Group group = new Group(container, groupName);
-      group.doAddMember(masterName);
+      group.doAddMember(jenkinsUserId);
       group.doGrantRole(roleName, 0, Boolean.TRUE);
       container.addGroup(group);
     }
