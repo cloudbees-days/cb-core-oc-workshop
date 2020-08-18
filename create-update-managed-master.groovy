@@ -15,7 +15,6 @@ import jenkins.model.Jenkins
 import org.apache.commons.io.FileUtils
 
 String masterName = "REPLACE_MASTER_NAME" 
-String jenkinsUserId = "REPLACE_JENKINS_USER"
 String gitHubPAT = "REPLACE_GITHUB_PAT".bytes.encodeBase64().toString()
 String masterDefinitionYaml = """
 bundle:
@@ -158,6 +157,7 @@ private void createMM(String masterName, def masterDefinition) {
     }
 
   def teamsFolder = Jenkins.instance.getItem('teams')  
+  String jenkinsUserId = "REPLACE_JENKINS_USER"
   ManagedMaster master = teamsFolder.createProject(ManagedMaster.class, masterName)
     master.setConfiguration(configuration)
     master.properties.replace(new ConnectedMasterLicenseServerProperty(null))
