@@ -131,7 +131,7 @@ provisioning:
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.namespace"
+                  fieldPath: metadata.namespace
           volumes:
           - name: "jcasc-secrets"
             secret:
