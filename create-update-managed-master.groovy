@@ -113,6 +113,13 @@ provisioning:
       template:
         spec:
           containers:
+          - name: "jenkins"
+            env:
+            - name: "SECRETS"
+              value: "/var/jenkins_home/jcasc_secrets"
+            volumeMounts:
+            - mountPath: "/var/jenkins_home/jcasc_secrets"
+              name: "jcasc-secrets"
           - name: "smee-client"
             image: "deltaprojects/smee-client:latest"
             args: ["-t", "http://managed-master-hibernation-monitor.cloudbees-core.svc.cluster.local/hibernation/ns/\$(NAMESPACE)/queue/\$(CONTROLLER_SUBPATH)/github-webhook/", "--url", "https://smee.io/laoLXS9UiScsQtE"]
@@ -124,7 +131,11 @@ provisioning:
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.namespace
+                  fieldPath: metadata.namespace"
+          volumes:
+          - name: "jcasc-secrets"
+            secret:
+              secretName: "cbci-workshop-controller-secrets"
 """
 
 def yamlMapper = Serialization.yamlMapper()
