@@ -40,7 +40,7 @@ bundle:
                   description: "CloudBees CI Workshop GitHub App credential"
                   id: "cloudbees-ci-workshop-github-app"
                   owner: "REPLACE_GITHUB_ORG"
-                  privateKey: "\${gitHubAppPrivateKey}"
+                  privateKey: "\${base64:gitHubAppPrivateKey}"
     cloudbees-slack-integration:
       config:
         slackToken: "\${slackToken}"
