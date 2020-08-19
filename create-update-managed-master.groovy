@@ -15,7 +15,6 @@ import jenkins.model.Jenkins
 import org.apache.commons.io.FileUtils
 
 String masterName = "REPLACE_MASTER_NAME" 
-String gitHubPAT = "REPLACE_GITHUB_PAT".bytes.encodeBase64().toString()
 String masterDefinitionYaml = """
 bundle:
   jcasc:
@@ -93,15 +92,6 @@ provisioning:
   disk: 10
   memory: 3600
   yaml: |
-    kind: Secret
-    apiVersion: v1
-    metadata:
-      name: mm-casc-pat-${masterName}
-      namespace: cloudbees-core
-    type: Opaque
-    data:
-      github-pat: ${gitHubPAT}
-    ---  
     kind: Service
     metadata:
       annotations:
@@ -114,16 +104,9 @@ provisioning:
       template:
         spec:
           containers:
-          - name: "jenkins"
-            env:
-            - name: "SECRETS"
-              value: "/var/jenkins_home/jcasc_secrets"
-            volumeMounts:
-            - mountPath: "/var/jenkins_home/jcasc_secrets"
-              name: "mm-casc-pat"
           - name: "smee-client"
             image: "deltaprojects/smee-client:latest"
-            args: ["-t", "http://managed-master-hibernation-monitor.cloudbees-core.svc.cluster.local/hibernation/ns/$(NAMESPACE)/queue/$(CONTROLLER_SUBPATH)/github-webhook/", "--url", "https://smee.io/laoLXS9UiScsQtE"]
+            args: ["-t", "http://managed-master-hibernation-monitor.cloudbees-core.svc.cluster.local/hibernation/ns/\$(NAMESPACE)/queue/\$(CONTROLLER_SUBPATH)/github-webhook/", "--url", "https://smee.io/laoLXS9UiScsQtE"]
             env:
             - name: CONTROLLER_SUBPATH
               valueFrom:
@@ -133,10 +116,6 @@ provisioning:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-          volumes:
-          - name: "mm-casc-pat"
-            secret:
-              secretName: "mm-casc-pat-${masterName}"
 """
 
 def yamlMapper = Serialization.yamlMapper()
