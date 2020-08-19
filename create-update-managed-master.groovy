@@ -135,7 +135,7 @@ provisioning:
           volumes:
           - name: "jcasc-secrets"
             secret:
-              secretName: "cbci-workshop-controller-secrets-784dt4t8td"
+              secretName: "cbci-workshop-controller-secrets-"
 """
 
 def yamlMapper = Serialization.yamlMapper()
