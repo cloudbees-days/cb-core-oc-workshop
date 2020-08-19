@@ -34,40 +34,50 @@ bundle:
               name: "github.com"
               description: "GitHub"
             credentials:
-              - string:
-                  scope: GLOBAL
-                  id: github-token-secret
-                  description: "GitHub PAT from JCasC - secret text"
-                  secret: "\${github-pat}"
-              - usernamePassword:
-                  scope: GLOBAL
-                  id: github-username-pat
-                  description: "GitHub PAT from JCasC - username/password"
-                  username: "${masterName}"
-                  password: "\${github-pat}"
+              - gitHubApp:
+                  apiUri: "https://api.github.com"
+                  appID: "77562"
+                  description: "CloudBees CI Workshop GitHub App credential"
+                  id: "cloudbees-ci-workshop-github-app"
+                  owner: "REPLACE_GITHUB_ORG"
+                  privateKey: "\${gitHubAppPrivateKey}"
+    cloudbees-slack-integration:
+      config:
+        slackToken: "\${slackToken}"
+        slackWorkspace: "T010A455W77"
+        users:
+        - id: "REPLACE_JENKINS_USER"
+          jenkins: "REPLACE_JENKINS_USER"
+          optedIn: true
+          scmId: "REPLACE_MASTER_NAME"
+          slackWorkspace: "T010A455W77"
   pluginCatalog:
     configurations:
     - description: tier 3 plugins
       includePlugins:
-        cloudbees-disk-usage-simple:
-          version: "0.10"
-        cloudbees-msteams:
-          url: "https://storage.googleapis.com/core-workshop-plugins/cloudbees-msteams-0.2.hpi"  
-        extended-read-permission:
-          version: "3.2"
-        prometheus:
-          version: 2.0.7
+        analysis-model-api: {version: 8.2.1}
+        bootstrap4-api: {version: 4.5.0-2}
+        checks-api: {version: 0.2.3}
+        data-tables-api: {version: 1.10.21-2}
+        echarts-api: {version: 4.8.0-2}
+        extended-read-permission: {version: 3.2}
+        font-awesome-api: {version: 5.13.0-1}
+        forensics-api: {version: 0.7.0}
+        jquery3-api: {version: 3.5.1-1}
+        plugin-util-api: {version: 1.2.2}  
+        popper-api: {version: 1.16.0-6}
+        prometheus: {version: 2.0.7}
+        warnings-ng: {version: 8.4.1}  
     displayName: CloudBees CI Workshop Plugin Catalog
     name: cbci-workshop-catalog
     type: plugin-catalog
     version: "1"
   plugins:
-  - id: cloudbees-disk-usage-simple
   - id: cloudbees-github-reporting
   - id: cloudbees-groovy-view
   - id: cloudbees-monitoring
-  - id: cloudbees-msteams
   - id: cloudbees-nodes-plus
+  - id: cloudbees-slack
   - id: cloudbees-template
   - id: cloudbees-view-creation-filter
   - id: cloudbees-workflow-template
@@ -76,7 +86,6 @@ bundle:
   - id: extended-read-permission
   - id: git
   - id: github-branch-source
-  - id: ldap
   - id: managed-master-hibernation
   - id: maven-plugin
   - id: operations-center-cloud
