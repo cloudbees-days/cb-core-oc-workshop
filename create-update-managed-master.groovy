@@ -50,6 +50,7 @@ bundle:
           jenkins: "REPLACE_JENKINS_USER"
           optedIn: true
           scmId: "REPLACE_MASTER_NAME"
+          slack: "REPLACE_USER_EMAIL"
           slackWorkspace: "T010A455W77"
   pluginCatalog:
     configurations:
