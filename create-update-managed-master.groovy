@@ -76,7 +76,11 @@ bundle:
     type: plugin-catalog
     version: "1"
   plugins:
+  - id: analysis-model-api
   - id: antisamy-markup-formatter
+  - id: bootstrap4-api
+  - id: checks-api
+  - id: cloudbees-disk-usage-simple
   - id: cloudbees-github-reporting
   - id: cloudbees-groovy-view
   - id: cloudbees-monitoring
@@ -88,15 +92,22 @@ bundle:
   - id: cloudbees-workflow-template
   - id: cloudbees-workflow-ui
   - id: configuration-as-code
+  - id: data-tables-api
+  - id: echarts-api
   - id: extended-read-permission
+  - id: font-awesome-api
+  - id: forensics-api
   - id: git
   - id: github-branch-source
+  - id: jquery3-api
   - id: managed-master-hibernation
   - id: maven-plugin
   - id: operations-center-cloud
   - id: pipeline-event-step
   - id: pipeline-model-extensions
   - id: pipeline-stage-view
+  - id: plugin-util-api
+  - id: popper-api
   - id: prometheus
   - id: warnings-ng
   - id: wikitext
