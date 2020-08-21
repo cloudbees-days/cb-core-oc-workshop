@@ -59,6 +59,7 @@ bundle:
         analysis-model-api: {version: 8.2.1}
         bootstrap4-api: {version: 4.5.0-2}
         checks-api: {version: 0.2.3}
+        cloudbees-disk-usage-simple: {version: 0.10}
         cloudbees-msteams: {url: "https://storage.googleapis.com/core-workshop-plugins/cloudbees-msteams-0.2.hpi"} 
         data-tables-api: {version: 1.10.21-2}
         echarts-api: {version: 4.8.0-2}
@@ -75,6 +76,7 @@ bundle:
     type: plugin-catalog
     version: "1"
   plugins:
+  - id: antisamy-markup-formatter
   - id: cloudbees-github-reporting
   - id: cloudbees-groovy-view
   - id: cloudbees-monitoring
@@ -92,6 +94,7 @@ bundle:
   - id: managed-master-hibernation
   - id: maven-plugin
   - id: operations-center-cloud
+  - id: pipeline-event-step
   - id: pipeline-model-extensions
   - id: pipeline-stage-view
   - id: prometheus
