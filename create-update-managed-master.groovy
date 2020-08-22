@@ -151,8 +151,11 @@ provisioning:
                   fieldPath: metadata.namespace
           volumes:
           - name: "jcasc-secrets"
-            secret:
-              secretName: "cbci-workshop-controller-secrets"
+            csi:
+              driver: secrets-store.csi.k8s.io
+              readOnly: true
+              volumeAttributes:
+                secretProviderClass: "cbci-mc-secret-provider"
 """
 
 def yamlMapper = Serialization.yamlMapper()
