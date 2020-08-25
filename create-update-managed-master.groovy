@@ -117,6 +117,7 @@ bundle:
   - id: forensics-api
   - id: git
   - id: github-branch-source
+  - id: jacoco
   - id: jquery3-api
   - id: managed-master-hibernation
   - id: maven-plugin
@@ -132,9 +133,9 @@ bundle:
   - id: workflow-aggregator
   - id: workflow-cps-checkpoint
 provisioning:
-  cpus: 1.9
+  cpus: 1.5
   disk: 10
-  memory: 3600
+  memory: 4000
   yaml: |
     kind: Service
     metadata:
