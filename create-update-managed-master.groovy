@@ -53,9 +53,6 @@ bundle:
               scope: SYSTEM
               secret: "\${gitHubWebhookSecret}"
         - credentials:
-          domain :
-            name: "github.com"
-            description: "Public GitHub"
           - gitHubApp:
               apiUri: "https://api.github.com"
               appID: "77562"
@@ -63,6 +60,9 @@ bundle:
               id: "cloudbees-ci-workshop-github-app"
               owner: "REPLACE_GITHUB_ORG"
               privateKey: "\${gitHubAppPrivateKey}"
+          domain :
+            name: "github.com"
+            description: "Public GitHub"
     cloudbees-slack-integration:
       config:
         slackToken: "\${slackToken}"
