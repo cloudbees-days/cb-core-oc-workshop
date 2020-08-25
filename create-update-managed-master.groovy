@@ -19,7 +19,7 @@ String masterDefinitionYaml = """
 bundle:
   jcasc:
     jenkins:
-      systemMessage: 'Jenkins configured using CloudBees CI CasC'
+      systemMessage: 'Jenkins configured using CloudBees CI CasC - v1'
     unclassified:
       hibernationConfiguration:
         activities:
@@ -27,9 +27,31 @@ bundle:
         - "web"
         enabled: true
         gracePeriod: 7200
+      gitHubConfiguration:
+        apiRateLimitChecker: ThrottleForNormalize
+      gitHubPluginConfig:
+        hookSecretConfigs:
+        - credentialsId: "cloudbees-ci-workshop-github-webhook-secret"
+      globallibraries:
+        libraries:
+        - defaultVersion: "master"
+          name: "pipeline-library"
+          retriever:
+            modernSCM:
+              scm:
+                github:
+                  credentialsId: "cloudbees-ci-workshop-github-app"
+                  repoOwner: "REPLACE_GITHUB_ORG"
+                  repository: "pipeline-library"
     credentials:
       system:
         domainCredentials:
+        - credentials:
+          - string:
+              description: "Webhook secret for CloudBees CI Workshop GitHub App"
+              id: "cloudbees-ci-workshop-github-webhook-secret"
+              scope: SYSTEM
+              secret: "\${gitHubWebhookSecret}"
           - domain :
               name: "github.com"
               description: "GitHub"
