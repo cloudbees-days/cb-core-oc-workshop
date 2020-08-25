@@ -55,7 +55,7 @@ bundle:
         - credentials:
           domain :
             name: "github.com"
-            description: "GitHub"
+            description: "Public GitHub"
           - gitHubApp:
               apiUri: "https://api.github.com"
               appID: "77562"
