@@ -19,4 +19,4 @@ def cred = credentials.findResult { it.id == gitHubOrg ? it : null }
 
 def domain = Domain.global()
 def store = jenkins.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
-store.deleteCredentials(domain, cred)
+store.removeCredentials(domain, cred)
