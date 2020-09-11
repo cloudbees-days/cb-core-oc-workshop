@@ -27,12 +27,13 @@ if (masters != null) {
     }
 }
 if (masters == null) {
-    ListView mlv = new MastersView('Masters', j);
+    ListView mlv = new MastersView('controllers', j);
     mlv.setRecurse(true)
     DescribableList<ViewJobFilter, Descriptor<ViewJobFilter>> jf = mlv.getJobFilters();
 
     jf.add(new JobTypeFilter("com.cloudbees.opscenter.server.model.ClientMaster", "includeMatched"));
     jf.add(new JobTypeFilter("com.cloudbees.opscenter.server.model.ManagedMaster", "includeMatched"));
+    jf.add(new SecurityFilter("MustMatchAll", false, true, false, "excludeUnmatched"));
 
     DescribableList<ListViewColumn, Descriptor<ListViewColumn>> cols = mlv.getColumns();
 
