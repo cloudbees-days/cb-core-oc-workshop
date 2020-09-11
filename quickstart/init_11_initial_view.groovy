@@ -26,7 +26,14 @@ if (masters != null) {
         masters = null;
     }
 }
-if (masters == null) {
+def controllersViews = j.getView('controllers');
+if (controllersViews != null) {
+    if (!(controllersViews instanceof MastersView)) {
+        j.deleteView(controllersViews);
+        controllersViews = null;
+    }
+}
+if (controllersViews == null) {
     ListView mlv = new MastersView('controllers', j);
     mlv.setRecurse(true)
     DescribableList<ViewJobFilter, Descriptor<ViewJobFilter>> jf = mlv.getJobFilters();
@@ -51,19 +58,4 @@ if (masters == null) {
     j.addView(mlv);
     j.primaryView = mlv;
     j.save()
-}
-
-def cur = j.getView("all")
-if (cur instanceof AllView) {
-    def lv = new MastersView("All", j);
-    lv.includeRegex = '.*'
-    def cols = lv.columns;
-    cols.clear();
-    cols.add(new StatusColumn());
-    cols.add(new WeatherColumn());
-    cols.add(new JobColumn());
-    cols.add(new ManageMasterListViewColumn());
-    cols.add(new com.cloudbees.opscenter.server.clusterops.adhoc.ListSelectionColumn());
-    j.deleteView(cur);
-    j.addView(lv);
 }
